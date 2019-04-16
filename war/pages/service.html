@@ -1,0 +1,1148 @@
+<head>
+<script type="text/javascript">
+	if (!("autofocus" in document.createElement("input")))
+		document.getElementById("carm").focus();
+</script>
+<script>
+	$('#mydetalle').on('shown.bs.modal', function() {
+		$('#myInput').focus()
+	})
+</script>
+<script>
+function valida(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+</script>
+</head>
+<div class="container-fluid">
+	<ol class="breadcrumb">
+		<button class="btn btn-large btn-primary" ng-click="guardar()"
+			ng-disabled="(!PresupuestoForm.$valid)">
+			<i class="fa fa-floppy-o"></i>
+		</button>
+		<button class="btn btn-large btn-primary" data-toggle="modal"
+			data-target="#eventoModal" ng-click="imprimir()">
+			<i class="fa fa-print"></i>
+		</button>
+	</ol>
+	<div></div>
+	<!-- 	{{eventos}}	-->
+	<ul class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab"
+			ng-click="showTab('cliente')">Cliente</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('auto')">Auto</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('bitacora')">Bit&aacute;cora</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('presupuesto')">Presupuesto</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('cobranza')">Cobranza</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div id="cliente" class="tab-pane fade in active">
+
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-3">Cliente</label>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Nombre
+						o raz&oacute;n social</label>
+					<div class="col-sm-6">
+<!-- 						<input class="form-control" type="text" ng-model="servicio.cliente.nombre"/> -->
+						<input class="form-control" type="text"  id="buscaClient" autocomplete="off" ng-model="buscaCli" />
+					</div>
+					<div class="col-sm-2">
+					<button class="btn btn-link" data-toggle="modal" data-target="#mdlCliente" ng-hide="btnhide">Ver Encontrados</button>
+					
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">RFC</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.rfc"
+							ng-change="servicio.cliente.rfc=mayusculas(servicio.cliente.rfc)" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Domicilio Fiscal</label>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Calle</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.calle" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Num.
+						Interior</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.numInterior" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">C&oacute;digo
+						Postal</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.codigoPostal" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Colonia</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.colonia" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Ciudad</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.ciudad" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Datos de contacto</label>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Contacto</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.contacto" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">E-mail</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.email" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Tel&eacute;fono</label>
+					<div class="col-sm-6">
+						<div class="col-sm-3">
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[0].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select> <select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[1].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select> <select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[2].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[0].valor" />
+						</div>
+
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[1].valor" />
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[2].valor" />
+						</div>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+
+		<div id="auto" class="tab-pane fade">
+		<div class="clearfix">
+				<h4>Asesor</h4>
+			</div>
+			<div class="row">
+			<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Nombre del Asesor</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.servicio.asesor" />
+							</div>
+						</div>
+					</div>
+					</div>
+					<br>
+			<div class="clearfix">
+				<h4>Datos del Auto</h4>
+			</div>
+			<form class="form-horizontal" name="FormAuto">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="nombreCliente" class="control-label col-sm-3">N&uacute;mero
+								de Serie</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									onkeyup="this.value = this.value.toUpperCase();" autocomplete="off"
+									ng-model="busca" name="NoSerie" id="NoSerie" required />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Marca</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" name="marca"
+									ng-model="servicio.auto.marca" required />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Tipo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" name="tipo"
+									ng-model="servicio.auto.tipo" required />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Versi&oacute;n</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" name="version"
+									ng-model="servicio.auto.version" />
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Modelo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" name="modelo"
+									ng-model="servicio.auto.modelo" required />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Color</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" name="color"
+									ng-model="servicio.auto.color" ng-required="true" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Placas</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									onkeyup="this.value = this.value.toUpperCase();" name="placas"
+									ng-model="servicio.auto.placas" required />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Kilometraje</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.servicio.datosAuto.kilometraje" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Numero
+								Econ&oacute;mico</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" min="0" max="100"
+									ng-model="servicio.auto.numeroEconomico"
+									onkeyup="this.value = this.value.toUpperCase();" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<!--*****modal por falta de estilos en la barra se puso a esta altura(no mover)****-->
+						<div class="modal fade" id="mydetalle" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<center>
+											<h4 class="modal-title" id="myModalLabel">Actualizar %
+												de Combustible</h4>
+										</center>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="form-group">
+
+											<div class="col-md-6">
+												<div class="form-group">
+
+													<label class="control-label col-sm-3">(%)</label>&nbsp;&nbsp;
+													<div class="col-sm-4">
+														<input id="ex6" type="text" data-slider-min="0"
+															data-slider-max="100" data-slider-step="5"
+															data-slider-value="0" />
+														<!--<span id="ex6CurrentSliderValLabel"><span id="ex6SliderVal">0</span></span>-->
+														<!-- 								<input class="form-control" type="number" min="0" max="100" -->
+														<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary"
+											ng-click="guardar()" data-dismiss="modal">Aceptar</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--************termina modal******************************-->
+						<div class="col-md-3">
+							<button class="btn btn-large btn-primary" data-toggle="modal"
+								data-target="#mydetalle">
+								<i class="glyphicon glyphicon-ok-circle"></i>
+							</button>
+						</div>
+						<div class="col-md-9">
+							<div class="form-group">
+								<label class="control-label col-sm-4">&nbsp;&nbsp;Combustible:</label>&nbsp;&nbsp;
+								<div class="col-sm-4">
+									<span id="ex6CurrentSliderValLabel"><span
+										id="ex6SliderVal">0</span></span>(%)
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="clearfix">
+					<h4>Equipamiento</h4>
+				</div>
+				<br> <br>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Transmisi&oacute;n</label>
+							<div class="radio">
+								<label><input type="radio" name="optradio"
+									ng-model="servicio.auto.equipamiento.transmision"
+									value="Manual">Manual</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="optradio"
+									ng-model="servicio.auto.equipamiento.transmision"
+									value="Automatica">Autom&aacute;tica</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Elevadores</label>
+							<div class="radio">
+								<label><input type="radio" name="optradio2"
+									ng-model="servicio.auto.equipamiento.elevadores"
+									value="Manuales">Manuales</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="optradio2"
+									ng-model="servicio.auto.equipamiento.elevadores"
+									value="Electricos">El&eacute;ctricos</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Bolsas de Aire</label>
+							<div>
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.equipamiento.bolsasDeAire" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="checkbox">
+								<label><input type="checkbox"
+									ng-model="servicio.auto.equipamiento.aireAcondicionado">Aire
+									Acondicionado</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix">
+					<h4>Equipamiento</h4>
+				</div>
+				<br>
+				<div class="row">
+					<div class="form-group">
+						<label for="comment">Descripci&oacute;n del Servicio:</label>
+						<textarea class="form-control" rows="4"
+							ng-model="servicio.servicio.descripcion"></textarea>
+					</div>
+				</div>
+				<div clas="row">
+					Caracter&iacute;sticas del Auto
+					<div class="form-group">
+						<div>
+							<input class="form-control" type="text"
+								ng-model="caracteristicaAuto" />
+						</div>
+						<button class="btn btn-small btn-primary" ng-click="addCaract()">Agregar</button>
+					</div>
+					<br>
+					<table class="table table-striped">
+						<tbody>
+							<tr
+								ng-repeat="carac in servicio.auto.equipamiento.equipoAdicional">
+								<td>{{carac}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</form>
+		</div>
+		<div id="bitacora" class="tab-pane fade">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-bar-chart-o fa-fw"></i> Bitacora
+								<button class="btn btn-small btn-primary" data-toggle="modal"
+									data-target="#eventoModal" ng-click="nuevoEvento()">
+									<i class="fa fa-plus"></i>
+								</button>
+
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div id="morris-area-chart">
+								<div class="row" ng-repeat="ev in eventos | orderBy : '-fecha'">
+									<form class="form-inline">
+										<div class="row">
+											<div class="col-md-6">
+												<b>{{ev.tipo}}</b>
+											</div>
+											<div style="float: right !important">
+												<button class="btn btn-small btn-link" data-toggle="modal"
+													data-target="#eventoModal"
+													ng-click="verEvidencias(ev); pausar();">Evidencias</button>
+												<button class="btn btn-small btn-link"
+													ng-click="borrarEvento(ev)">Borrar</button>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label for="fecha">Fecha</label> <input type="text"
+														class="form-control" id="fecha"
+														ng-model="ev.fecha | date: 'd MMM, y h:mm:ss a'">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="resp">Responsable</label> <input type="text"
+														class="form-control" id="resp" ng-model="ev.responsable">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label for="resp">Fecha de Creacion:</label> <input
+														type="text" class="form-control" id="fecha"
+														ng-model="ev.fecha | date: 'd MMM, y h:mm:ss a'">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<textarea class="form-control" style="width: inherit;"
+													id="descripcion" rows="3" ng-model="ev.descripcion"></textarea>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12"></div>
+				<hr>
+			</div>
+		</div>
+		<div id="presupuesto" class="tab-pane fade">
+			<form name="PresupuestoForm" class="form-horizontal">
+				<div class="row">
+					<div class="col-sm-2"
+							ng-if="servicio.servicio.metadata.status!='Cotizaci&oacute;n'">
+							<button
+								ng-click="sendPresu('Cotizaci&oacute;n','Al dar click en ACEPTAR el Estatus cambiara a ')"
+								class="btn btn-small btn-primary">
+								<i class="fa fa-check">Presupuesto Enviado</i>
+							</button>
+						</div>
+						<!-- Boton de Mandar Estatus de reparacion -->
+<!-- 					<div class="col-sm-2"> -->
+<!-- 						<button ng-click="sendReparacion()" -->
+<!-- 							class="btn btn-small btn-primary"> -->
+<!-- 							<i class="fa fa-check">Enviar a Reparaci&oacute;n</i> -->
+<!-- 						</button> -->
+<!-- 					</div> -->
+				</div>
+
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<ol class="breadcrumb">
+							<li><button class="btn-link" data-toggle="modal"
+									data-target="#eventoModal"
+									ng-click="verModal('showModalGrupo')">Agregar grupo</button></li>
+						</ol>
+					</div>
+					<div class="col-md-12" ng-repeat="gru in servicio.gruposCosto">
+
+						<div class="row">
+							<div class="col-md-12">
+								<b ng-click="nGrupo($index)" id="grupo{{$index}}">{{gru.nombre}}</b>
+								<div id="grupoIn{{$index}}" style="display:none;" >
+								<input ng-blur="cambioNombre($index)"  ng-model="gru.nombre" />&nbsp;<i ng-click="cambioNombre($index)" class="fa fa-save fa-2x"></i>
+							
+								</div>
+								<ul class="list-inline">
+									<li><button class="btn-link"
+											ng-click="addPresupuesto(gru,'')">Agregar Concepto</button></li>
+								</ul>
+							</div>
+							<!-- 						<div class="col-md-6"> -->
+							<!-- 							<button class="btn btn-small btn-primary" -->
+							<!-- 								ng-click="addPresupuesto(gru)"> -->
+							<!-- 								<i class="fa fa-plus"></i></button> -->
+							<!-- 						</div> -->
+						</div>
+						<div class="table-responsive">
+							<table
+								class="letraChica table table-bordered table-striped table-presupuesto">
+								<thead>
+									<tr>
+										<th>Tipo</th>
+										<th style="width: 9%">Concepto</th>
+										<th style="width: 2%">Cantidad</th>
+										<th>Precio Unitario</th>
+										<th style="width: 4%">IVA</th>
+										<th style="width: 4%">IVA</th>
+										<th>Precio Cliente</th>
+										<th style="width: 4%">Utilidad</th>
+										<th>Subtotal</th>
+										<!-- 									<th style="width: 4%">IVA</th> -->
+										<th>Autorizado <input style="width: auto;" id ="ckAll"
+											type="checkbox" ng-model="gru.autoTodos" value="false"
+											ng-click="seleccionarTodoAutorizado(gru)" /></th>
+										<th style="width: 1%"></th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr ng-repeat="pres in gru.presupuestos">
+										<span
+											ng-show="!PresupuestoForm.$pristine && PresupuestoForm.concepto.$error.required">Es
+											necesario selecciona escribir el nombre de concepto.</span>
+										<span
+											ng-show="!PresupuestoForm.$pristine && PresupuestoForm.preciounit.$error.pattern">solo
+											puedes introducir numeros en precio unitario.</span>
+										<span
+											ng-show="!PresupuestoForm.$pristine && PresupuestoForm.precioclien.$error.pattern">solo
+											puedes introducir numeros en precio cliente.</span>
+										<td><select ng-model="pres.subtipo"
+											ng-change="conceptoChg(pres,$index,gru)" name="subtipo">
+
+												<option value="MO">Mano de Obra</option>
+												<option value="RE">Refacciones</option>
+												<option value="IN">Insumo</option>
+												<option value="SE">Servicio</option>
+										</select></td>
+										<td><input type="text" style="width: 100%"
+											ng-model="pres.concepto"
+											ng-change="conceptoChg(pres,$index,gru)" name="concepto"
+											required /></td>
+										<td><input type="number"
+											style="width: 35px; height: 25px" ng-model="pres.cantidad"
+											min="0" /></td>
+										<td>
+											<!--$<input type="text" step="0.01"
+										ng-model="pres.precioUnitario.value" />--> $<input type="text"
+											step="0.01" ng-model="pres.precioUnitario.value"
+											name="preciounit" ng-pattern="/^[0-9.]*$/" />
+										</td>
+										<td><input type="checkbox"
+											ng-model="pres.precioUnitarioConIVA"
+											ng-click="pres.precioUnitario.value=calcularPUI(pres)" /></td>
+										<td><label disabled ng-show="pres.precioUnitarioConIVA">{{'$'+currency(pres.precioUnitario.value*0.16,2,
+												[',', "'", '.'])}}</label></td>
+										<td><input type="text" step="0.01"
+											ng-model="pres.precioCliente.value" name="precioclien"
+											ng-pattern="/^[0-9.]*$/" /></td>
+										<td><label>{{'$'+utilidad1(pres)}} / {{
+												utilidad(pres)+'%'}}</label></td>
+										<td
+											ng-init="$parent.total = ($parent.total + (pres.precioCliente.value*pres.cantidad))*1">
+											<label>{{'$'+currency(pres.precioCliente.value*pres.cantidad,2,
+												[',', "'", '.'])}}</label>
+										</td>
+										<!-- 									<td><label ng-show="servicio.servicio.cobranza.facturado">{{'$'+currency(pres.precioCliente.value*pres.cantidad*0.16,2, -->
+										<!-- 											[',', "'", '.'])}}</label></td> -->
+										<td><input id="ckAtorizado{{pres.indice}}" type="checkbox" ng-model="pres.autorizado" ng-click = "sendReparacion(pres.indice);" ng-disabled="!pres.indice"/></td>
+										<td><button class="btn btn-small"
+												ng-click="borraPresupuesto(gru,$index)">
+												<i class="fa fa-times" aria-hidden="true"></i>
+											</button> <!-- 								<td><input type="select" ng-model="pres.tipo"/></td> -->
+									</tr>
+									<tr>
+										<td><button class="btn-link"
+											ng-click="addPresupuesto(gru,'')">Agregar Concepto</button></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td align="right"><b><p ng-if="total">Total:</p></b></td>
+										<td><p ng-if="total">{{total | currency}}</p></td>
+										<!-- 									<td>{{constoTotal | currency}}</td> -->
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+					<button class="btn btn-small btn-primary" ng-click="addCot()"
+						ng-disabled="(!PresupuestoForm.$valid) || gru.presupuestos.length ==0 || servicio.gruposCosto.nombregrupo == ''">
+						<i class="fa fa-plus">Agregar Proveedor</i>
+					</button>
+				</div>
+				<hr>
+				<div class="row">
+					<!-- 		ng-show="contarCotizables()>0"	{{listcotizaciones.costos}} -->
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<span>Lista de Proveedores</span>
+							<table class="letraChica table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th></th>
+										<th ng-repeat="prove in listcotizaciones.proveedores"><input
+											id="proveedor{{$index}}" type="text" ng-model="prove" />
+											<button class="btn btn-danger"
+												ng-click="borrarProveedor($index)">
+												<i class="fa fa-trash-o" aria-hidden="true"></i>
+											</button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="ng-binding"
+										ng-repeat="cot in listcotizaciones.costos">
+										<td>{{cot.concepto}}</td>
+										<td class="ng-binding" ng-repeat="costo in cot.costos"><input
+											 ng-model="costo.precio" onkeypress="return valida(event)"
+											value="{{costo.precio}}"> <input type="checkbox"
+											name="{{cot.concepto}}" ng-disabled="!costo.precio > 0"
+											ng-model="costo.selected"
+											ng-click="setPrecio(costo.precio,cot.concepto,costo)">
+
+										</td>
+										<!-- 									<td><input type="text" ng-model="cot.tiempo"></td> -->
+									</tr>
+									<!-- 								<tr> -->
+									<!-- 									<td><input type="text" ng-model="newCot.precio"></td> -->
+									<!-- 									<td><input type="text" ng-model="newCot.tiempo"></td> -->
+									<!-- 									<td><input type="radio" name="optradio" -->
+									<!-- 										ng-model="newCot.selected" ng-click="setPrecio(newCot.precio)"></td> -->
+									<!-- 								</tr> -->
+								</tbody>
+							</table>
+						</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="cobranza" class="tab-pane fade">
+	<!-- 			{{servicio.servicio}} -->
+	<div class="row">
+
+		<button class="btn btn-small btn-primary" ng-click="appendPago()">
+
+			<i class="fa fa-plus"></i> Agregar Pago
+		</button>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<!-- 					<div class="checkbox"> -->
+			<!-- 						<label><input type="checkbox" -->
+			<!-- 							ng-model="servicio.servicio.cobranza.facturado" -->
+			<!-- 							ng-click="facturado()">Facturado</label> -->
+			<!-- 					</div> -->
+			<!-- 					<div class="form-group"> -->
+			<!-- 						<label class="control-label" for="pwd">N&uacute;mero -->
+			<!-- 							Factura</label> -->
+			<!-- 						<div> -->
+			<!-- 							<input type="text" -->
+			<!-- 								ng-model="servicio.servicio.cobranza.numeroFactura" -->
+			<!-- 								ng-enabled="servicio.servicio.cobranza.facturado"> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+		</div>
+		<div class="col-md-8">
+			<table class="table">
+				<tbody>
+					<tr ng-show="servicio.servicio.cobranza.facturado">
+						<td>Subtotal</td>
+						<td>{{'$'+currency(servicio.servicio.metadata.costoTotal.value/1.16,2,[])}}</td>
+					</tr>
+					<tr ng-show="servicio.servicio.cobranza.facturado">
+						<td>IVA</td>
+						<td>{{'$'+currency((servicio.servicio.metadata.costoTotal.value/1.16)*0.16,2,[])}}</td>
+					</tr>
+					<tr>
+						<td>Total</td>
+						<td>{{servicio.servicio.metadata.costoTotal.value | currency}}</td>
+					</tr>
+					<tr>
+						<td>A cuenta</td>
+						<td>{{aCuenta | currency}}</td>
+					</tr>
+					<tr>
+						<td>Adeudo</td>
+						<td>{{servicio.servicio.metadata.costoTotal.value - aCuenta |
+							currency}}</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="row" ng-repeat="pago in servicio.servicio.cobranza.pagos">
+			<div class="col-md-2">
+				
+					<label class="control-label" for="pwd">Fecha:</label>
+					
+					<div class="">
+						<label>{{pago.fecha | date: 'd/MM/yyyy h:mm a'}}</label>
+					</div>
+			</div>
+			<div class="col-md-1">
+				<div class="form-group">
+					<label class="control-label" for="pwd">Facturado:</label>
+					<div class="">
+						<input id="myCheck" type="checkbox" ng-model="pago.facturado"/>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<label class="control-label" for="pwd">Responsable:</label>
+					<div class="">
+						<input type="text" ng-model="pago.responsable" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<label class="control-label" for="pwd">Monto:</label>
+					<div class="">
+						<input type="text" ng-model="pago.monto.value"
+							ng-keyup="evtPago()" /> 
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1" ng-if="pago.facturado==true">
+				<div class="form-group">
+					<label class="control-label" for="pwd">IVA 16%:</label>
+					<div class="">
+						<label>{{pago.monto.value * .16 | currency}}</label>
+						<!-- 							<input type="text" ng-value="pago.monto.value * .16" /> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1" ng-if="pago.facturado==true">
+				<div class="form-group">
+					<label class="control-label" for="pwd">Total:</label>
+					<div class="">
+						<label>{{((pago.monto.value * 1) + (pago.monto.value *
+							.16)) | currency}}</label>
+						<!-- 							<input type="text" ng-value="((pago.monto.value * 1) + (pago.monto.value * .16))" /> -->
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" ng-if="pago.facturado==true">
+				<div class="form-group">
+					<label class="control-label" for="pwd">Factura:</label>
+					<div class="">
+						<input type="text" ng-model="pago.numeroFactura" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1">
+				<div class="form-group">
+					<button class="btn btn-small btn-primary" ng-click="splicePag($index)">
+									<i class="fa fa-times"></i>
+								</button>
+			</div>
+			</div>
+			<div class="col-md-12">
+				<textarea
+					class="form-control ng-pristine ng-valid ng-empty ng-touched"
+					style="font-size: 9px" rows="3" ng-model="pago.detalle"></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="eventoModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document" ng-show="modals[1].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Percepci&oacute;n</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					Tipo de Evento
+					<div class="col-md-12">
+						<select ng-model="evento.tipo" class="form-control">
+				
+<!-- 							<option>Entrada de Auto</option> -->
+							<option>Diagn&oacute;stico</option>
+<!-- 							<option>Otro</option> -->
+							<option>Termino de servicio</option>
+							<option>Salida de Auto</option>
+							<option>Cancelaci&oacute;n</option>
+
+						</select>
+					</div>
+					<br>Fecha del evento
+					<div class="col-md-12">
+						<input class="form-control" type="datetime-local"
+							ng-model="evento.fecha">
+					</div>
+
+					<br> Responsable
+					<div class="col-md-12">
+						<input class="form-control" type="text"
+							ng-model="evento.responsable">
+					</div>
+					<br> Descripci&oacute;n:
+					<div class="col-md-12">
+						<textarea rows="3" ng-model="evento.descripcion"
+							class="form-control"></textarea>
+					</div>
+					<br> Archivos:
+					<div class="col-md-12">
+						<input id="b_pics" accept="image/*" type="file" class="file"
+							multiple="true" multiple-File-Model="b_pics" required />
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addEvento()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[0].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Nuevo Grupo</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						Nombre <input id="carm" autofocus type="text"
+							ng-model="nombreGrupo" /> <br>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addGrupo()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[2].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Evidencias</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-sm-6 col-md-3" ng-repeat="evi in evidenciasVer">
+								<a id="{{evi.image}}" class="thumbnail"
+									ng-class="{'selected' : evi.appended}"> <img
+									src="{{'https://facturacion.tikal.mx/images/'+evi.image+'.jpg'}}"
+									ng-click="selectImage(evi)"> <!-- 	<img src="{{'https://facturacion/tikal.mx/images/'+evi.image+'.jpg'}}"
+									ng-click="selectImage(evi)">    AUTOSOLVER-->
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input id="b_pics" accept="image/*" type="file" class="file"
+							multiple="true" multiple-File-Model="b_pics" required />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="appendImages()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[3].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Reportes</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<!-- 
+							<div class="col-md-6">
+								<a class="btn btn-primary" target="_blank"
+									href="{{'/reporte/presupuestoPDF/'+servicio.servicio.idServicio}}">
+									<i class="fa fa-print"></i>Presupuesto
+								</a>
+							</div>
+							<div class="col-md-6">
+								<a class="btn btn-primary" target="_blank"
+									href="{{'/reporte/presupuestoPDFSin/'+servicio.servicio.idServicio}}">
+									<i class="fa fa-print"></i>Evaluaci&oacute;n
+								</a>
+							</div>
+							-->
+							<div class="row">
+								<div class="col-md-2"></div>
+								<div class="col-md-4">
+									<!-- 									<a  -->
+									<!-- 										href="/reporte/presupuestoPDFSoloDatos/{{servicio.servicio.idServicio}}" -->
+									<!-- 										class="btn btn-primary" target="_blank"> <i -->
+									<!-- 										class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo -->
+									<!-- 									</a> -->
+
+									<a data-toggle="tooltip"
+										ng-click="showPdfRevision(servicio.servicio.idServicio)"
+										href="/reporte/presupuestoPDFSoloDatos/{{servicio.servicio.idServicio}}"
+										class="btn btn-primary"
+										download="Revision {{servicio.servicio.idServicio}} {{servicio.auto.tipo}} {{servicio.auto.placas}}.pdf">
+										<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo
+									</a>
+								</div>
+								<!-- 								<form method="POST" -->
+								<!-- 									action="/reporte/presupuestoPDFSoloDatos.pdf"> -->
+								<!-- 									<div class="col-md-4"> -->
+								<!-- 										<button class="btn btn-primary" target="_blank" type="submit"> -->
+								<!-- 											<i class="fa fa-print"></i>Revisi&oacute;n de veh&iacute;culo -->
+								<!-- 										</button> -->
+								<!-- 										<input type="hidden" name="id" -->
+								<!-- 											value="{{servicio.servicio.idServicio}}"> -->
+								<!-- 									</div> -->
+								<!-- 								</form> -->
+								<div class="col-md-1"></div>
+								<!-- 								<div class="col-md-4"> -->
+								<!-- 									<a -->
+								<!-- 										href="/reporte/presupuestoPDF/{{servicio.servicio.idServicio}}" -->
+								<!-- 										class="btn btn-primary" target="_blank" type="submit"> <i -->
+								<!-- 										class="fa fa-print"></i>Presupuesto -->
+								<!-- 									</a> -->
+								<!-- 								</div> -->
+								<div class="col-md-4">
+									<a data-toggle="tooltip"
+										ng-click="showPdfPresupuesto(servicio.servicio.idServicio)"
+										href="/reporte/presupuestoPDF/{{servicio.servicio.idServicio}}"
+										class="btn btn-primary"
+										download="Presupuesto {{servicio.servicio.idServicio}} {{servicio.auto.tipo}} {{servicio.auto.placas}}.pdf">
+										<i class="fa fa-print"></i>Presupuesto
+									</a>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-2"></div>
+								<!-- 								<div class="col-md-4"> -->
+								<!-- 									<a -->
+								<!-- 										href="/reporte/presupuestoPDFSin/{{servicio.servicio.idServicio}}" -->
+								<!-- 										class="btn btn-primary" target="_blank" type="submit"> <i -->
+								<!-- 										class="fa fa-print"></i>Cotizaci&oacute;n -->
+								<!-- 									</a> -->
+								<!-- 								</div> -->
+								<div class="col-md-4">
+									<a data-toggle="tooltip"
+										ng-click="showPdfCotizacion(servicio.servicio.idServicio)"
+										href="/reporte/presupuestoPDFSin/{{servicio.servicio.idServicio}}"
+										class="btn btn-primary"
+										download="Cotizaci&oacute;n {{servicio.servicio.idServicio}} {{servicio.auto.tipo}} {{servicio.auto.placas}}.pdf">
+										<i class="fa fa-print"></i>Cotizaci&oacute;n
+									</a>
+								</div>
+								<div class="col-md-1"></div>
+								<!-- 								<div class="col-md-4"> -->
+								<!-- 									<a -->
+								<!-- 										href="/reporte/presupuestoPDFInterno/{{servicio.servicio.idServicio}}" -->
+								<!-- 										class="btn btn-primary" target="_blank" type="submit"> <i -->
+								<!-- 										class="fa fa-print"></i>Interno -->
+								<!-- 									</a> -->
+								<!-- 								</div> -->
+								<div class="col-md-4">
+									<a data-toggle="tooltip"
+										ng-click="showPdfInerno(servicio.servicio.idServicio)"
+										href="/reporte/presupuestoPDFInterno/{{servicio.servicio.idServicio}}"
+										class="btn btn-primary"
+										download="Interno {{servicio.servicio.idServicio}} {{servicio.auto.tipo}} {{servicio.auto.placas}}.pdf">
+										<i class="fa fa-print"></i>Interno
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<!-- 					<button type="button" class="btn btn-primary" data-dismiss="modal" -->
+				<!-- 						ng-click="appendPago()">Agregar</button> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="mdlCliente" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Seleccione el Cliente Deseado</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table-hover" style="border: 1px">
+  <tr>
+    <th width="25%">Nombre</th>
+    <th width="15%">RFC</th>
+    <th width="20%">Calle</th>
+    <th width="10%">Ciudad</th>
+    <th width="10%">C.P.</th>
+    <th width="10%">Colonia</th>
+    <th width="10%">No. Int.</th>
+    <th></th>
+  </tr>
+  <tr ng-repeat="c in clientes" height="20px">
+    <td>{{c.nombre}}</td>
+    <td>{{c.rfc}}</td>
+    <td>{{c.domicilio.calle}}</td>
+    <td>{{c.domicilio.ciudad}}</td>
+    <td>{{c.domicilio.codigoPostal}}</td>
+    <td>{{c.domicilio.colonia}}</td>
+    <td>{{c.domicilio.numInterior}}</td>
+    <td><button type="button" class="btn btn-success" ng-click="setClient(c)" data-dismiss="modal"><i class="fa fa-check"/></button></td>
+  </tr>
+
+</table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<div class="modal modal-wide fade" id="mdlPDF" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<object data="{{url}}" type="application/pdf" height="870" width="850"></object>
+
+	</div>
+</div>
+
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+   
+      <div class="modal-body text-center">
+        <div class="loader"></div>
+          <div class="loader-txt" style=" color: white;">
+          <p>Por favor espere<br><br><small>{{msg}}</small></p>
+        </div>
+      </div>
+   
+  </div>
+</div>
+<!--******************************MODALES NO AGRUPADOS*******************************-->

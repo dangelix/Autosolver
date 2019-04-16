@@ -1,0 +1,87 @@
+
+<div class="modal fade" id="eventoModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document" ng-show="modals[1].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Percepci&oacute;n</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					Tipo de Evento
+					<div class="col-md-12">
+						<select ng-model="evento.tipo" class="form-control">
+							<option>Entrada de Auto</option>
+							<option>Diagn&oacute;stico</option>
+							<option>Observaciones</option>
+							<option>Reclamaciones</option>
+							<option>Otro</option>
+							<option>Salida de Auto</option>
+							<option>Cancelaci&oacute;n</option>
+							<option>Termino de servicio</option>
+						</select>
+					</div>
+					<br>Fecha del evento
+					<div class="col-md-12">
+						<input class="form-control" type="datetime-local"
+							ng-model="evento.fecha"> <input class="form-control"
+							type="time-local" ng-model="evento.fecha">
+					</div>
+
+					<br> Responsable
+					<div class="col-md-12">
+						<input class="form-control" type="text"
+							ng-model="evento.responsable">
+					</div>
+					<br> Descripci&oacute;n:
+					<div class="col-md-12">
+						<textarea rows="3" ng-model="evento.descripcion"
+							class="form-control"></textarea>
+					</div>
+					<br> Archivos:
+					<div class="col-md-12">
+						<input id="b_pics" accept="image/*" type="file" class="file"
+							multiple="true" multiple-File-Model="b_pics" required />
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addEvento()">Agregar</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-dialog" role="document" ng-show="modals[0].show">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modalGrupo"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Nevo Grupo</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						Nombre <input type="text" ng-model="nombreGrupo" />
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					ng-click="addGrupo()">Agregar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="grupoModal" tabindex="-1" role="dialog"
+	aria-labelledby="grupoModal" aria-hidden="true"></div>

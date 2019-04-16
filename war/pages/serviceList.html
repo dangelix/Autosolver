@@ -1,0 +1,79 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<b>Buscar</b>
+			<input id="searchBox" type="text" ng-model="busca" 
+				data-provide="typehead" autocomplete="off"
+			 />
+		</div>
+		
+	</div>
+	<hr>
+	<div class="row">
+	<div class="col-md-6">
+			<ul class="pagination .pagination-sm" style="margin:0;">
+				<li ng-repeat="abc in paginas" id="{{'pagA'+abc}}"
+					ng-click="cargarPagina(abc)"><a>{{abc}}</a></li>
+
+			</ul>
+			
+		</div>
+		<div class="col-md-12" ng-cloak>
+			<table class="letraChica table table-striped"	>
+				<thead >
+					<tr >
+						<th>Folio</th>
+						<th>Status</th>
+						<th>Nombre Cliente</th>
+						<th>Placas</th>
+						<th>Tipo</th>
+						<th>Recepci&oacute;n</th>
+						<th>Servicio</th>
+<!-- 						<th>Cobranza</th> -->
+<!-- 						<th>Facturado</th> -->
+						<th>D&iacute;as de adeudo</th>
+						<th>Saldo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="dias{{$index}}" ng-repeat="ser in listaServicios" class="{{getClaseStatus(ser.status,ser.dias)}} " >
+						<td ng-click="addAbierto(ser)"><a class="{{classColor(ser.status)}}"
+							href="{{'#/servicio/view/'+ser.id}}">{{ser.id}}</a></td>
+						<td><b>{{ser.status}}</b></td>
+						<td>{{ser.nombreCliente}}</td>
+						<td>{{ser.placas}}</td>
+						<td>{{ser.coche}}</td>
+						<td>{{ser.fechaInicio}}</td>
+						<td>{{ser.descripcion}}</td>
+<!-- 						<td>{{ser.cobranza}}</td> -->
+<!-- 						<td>{{isFacturado(ser.facturado)}}</td> -->
+						<td>{{ser.dias}}</td>
+						<td>{{ser.saldo | currency}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+	 		<ul class="pagination .pagination-sm">
+				<li ng-repeat="abc in paginas" id="{{'pagB'+abc}}"
+					ng-click="cargarPagina(abc)"><a>{{abc}}</a></li>
+			</ul>
+			
+		</div>
+		
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+   
+      <div class="modal-body text-center">
+        <div class="loader"></div>
+          <div class="loader-txt" style=" color: white;">
+          <p>Por favor espere<br><br><small>{{msg}}</small></p>
+        </div>
+      </div>
+   
+  </div>
+</div>
+	</div>
+
+</div>

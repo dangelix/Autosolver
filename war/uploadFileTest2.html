@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Angular file upload sample</title>
+
+<title>SB Admin - Bootstrap Admin Template</title>
+<link href="css/plugins/morris.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+
+
+<script src="js/ng/app.js"></script>
+<script src="js/ng/uploadFile.js"></script>
+
+<!-- <link rel="stylesheet" -->
+<!-- 	href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/codemirror.min.css"> -->
+<!-- <script -->
+<!-- 	src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/codemirror.min.js"></script> -->
+<!-- <script -->
+<!-- 	src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/mode/htmlmixed/htmlmixed.min.js"></script> -->
+<!-- <script -->
+<!-- 	src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/mode/htmlembedded/htmlembedded.min.js"></script> -->
+<!-- <script -->
+<!-- 	src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/mode/xml/xml.min.js"></script> -->
+<!-- <script -->
+<!-- 	src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.8.0/mode/javascript/javascript.min.js"></script> -->
+</head>
+
+ <body ng-app = "app">
+	
+      <div ng-controller = "myCtrl">
+      {{uri.url}}
+      <img src="/servicio/image/-0H8XuD-Za8o6nKYM3ZQsw">
+      <form action="http://tikal.mx/tallerWeb/uf.php" method="post" enctype="multipart/form-data"	>
+         <input accept="image/*" ng-model="file" name="pictures" ng-value="fileToUpload" value="{{fileToUpload}}" file-model="fileToUpload" set-file-data="fileToUpload = value;" type="file" id="my_file" multiple/>
+<!--          <button ng-click = "uploadFile(uri.url)">upload me</button>	 -->
+         <button type="submit">Upload me</button>	
+      </form>
+      
+      
+      
+      <br>
+      Muchos
+      
+      <input id="b_pics" accept="image/*" type="file" class="file" multiple="true" multiple-File-Model="b_pics" required/>
+      <button ng-click="addEvento()">upload muchos</button>	
+      </div>
+      <a href="/reporteGlobal/getReporte.xls" download target="_blank">test pdf</a>
+      </body>
+
+</html>

@@ -1,0 +1,443 @@
+<head>
+<style type="">
+	.error {
+  border-color: red;
+}
+ 
+.warning {
+  border-color: yellow;
+}
+</style>
+</head>
+<div class="container-fluid">
+	<ol class="breadcrumb">
+		<button class="btn btn-large btn-primary" ng-click="guardar()">
+			<i class="fa fa-floppy-o"></i>
+		</button>
+	</ol>
+	<ul class="nav nav-tabs">
+		<li><a data-toggle="tab"
+			ng-click="showTab('cliente')">Cliente</a></li>
+		<li><a data-toggle="tab" ng-click="showTab('auto')">Auto</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div id="cliente" class="tab-pane fade in active">
+
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-3">Cliente</label>
+				</div>
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="nombreCliente" class="control-label col-sm-3">Nombre -->
+<!-- 						o raz&oacute;n social</label> -->
+<!-- 					<div class="col-sm-6"> -->
+<!-- 						<input class="form-control" type="text" data-provide="typehead" id="searchCliente" -->
+<!-- 							ng-model="servicio.cliente.nombre" /> -->
+<!-- <!-- 							ng-change="findCliente()" /> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Nombre
+						o raz&oacute;n social</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text" data-provide="typehead" id="buscaClient" autocomplete="off" ng-model="busca" />
+<!-- 							ng-change="findCliente()" /> -->
+					</div>
+					<div class="col-sm-2">
+					<button class="btn btn-link" data-toggle="modal" data-target="#mdlCliente" ng-hide="btnhide">Ver Encontrados</button>
+					
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">RFC</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.rfc"
+							ng-change="servicio.cliente.rfc=mayusculas(servicio.cliente.rfc)" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Domicilio Fiscal</label>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Calle</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.calle" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Num.
+						Interior</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.numInterior" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">C&oacute;digo
+						Postal</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.codigoPostal" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Colonia</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.colonia" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">Ciudad</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.domicilio.ciudad" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Datos de contacto</label>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Contacto</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.contacto" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="rfc" class="control-label col-sm-3">E-mail</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"
+							ng-model="servicio.cliente.email" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nombreCliente" class="control-label col-sm-3">Tel&eacute;fono</label>
+					<div class="col-sm-6">
+						<div class="col-sm-3">
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[0].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[1].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+							<select class="form-control"
+								ng-model="servicio.cliente.telefonoContacto[2].label">
+								<option>Casa</option>
+								<option>Oficina</option>
+								<option>Movil</option>
+							</select>
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[0].valor" />
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[1].valor" />
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								ng-model="servicio.cliente.telefonoContacto[2].valor" />
+						</div>
+					</div>
+				</div>
+
+			</form>
+			<button class="btn btn-primary" ng-click="siguienteBtn()">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>Siguiente
+			</button>
+		</div>
+		<div id="auto" class="tab-pane fade">
+		<div class="clearfix">
+				<h4>Asesor</h4>
+			</div>
+			<div class="row">
+			<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Nombre del Asesor</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="asesor" />
+							</div>
+						</div>
+					</div>
+					</div>
+					<br>
+			<div class="clearfix">
+				<h4>Datos del auto</h4>
+			</div>
+			<form name="autoForm" class="form-horizontal">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="nombreCliente" class="control-label col-sm-3">N&uacute;mero
+								de Serie</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" data-provide="typehead" autocomplete="off"
+									id="buscaSerie"	
+									ng-model="search" onKeyUp="this.value=this.value.toUpperCase();"
+									maxlength="17" name="serie" required ng-class="{ error: autoForm.serie.$error.required && !autoForm.$pristine }">
+
+
+									<span ng-show="!autoForm.$pristine && autoForm.serie.$error.required">Numero de serie es requerido.</span>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Marca</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.marca" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Tipo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.tipo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Versi&oacute;n</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.version" />
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Modelo</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="number"
+									ng-model="servicio.auto.modelo" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Color</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.color" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Placas</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="buscaPlaca" type="text" data-provide="typehead" autocomplete="off"
+									ng-model="searchPlaca" OnKeyUp="this.value=this.value.toUpperCase();">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Kilometraje</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="number"
+									ng-model="servicio.servicio.datosAuto.kilometraje" name="kilometraje" required ng-class="{ error: autoForm.kilometraje.$error.required && !autoForm.$pristine }">
+
+									<span ng-show="!autoForm.$pristine && autoForm.kilometraje.$error.required">El kilometraje es necesario.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Numero
+								Econ&oacute;mico</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text" min="0" max="100"
+									ng-model="servicio.auto.numeroEconomico"
+									ng-change="servicio.auto.numeroEconomico=mayusculas(servicio.auto.numeroEconomico)" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Combustible(%)</label>
+							<div class="col-sm-6">
+								<input id="ex6" type="text" data-slider-min="0"
+									data-slider-max="100" data-slider-step="5"
+									data-slider-value="0" /> <span id="ex6CurrentSliderValLabel"><span
+									id="ex6SliderVal" style="padding-left: 15px;">0</span></span>
+								<!-- 								<input class="form-control" id="ex6SliderVal" type="number" min="0" max="100" -->
+								<!-- 									ng-model="servicio.servicio.datosAuto.combustible" /> -->
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="clearfix">
+					<h4>Equipamiento</h4>
+				</div>
+				<br> <br>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Transmisi&oacute;n</label>
+							<div class="radio">
+								<label><input type="radio" name="optradio"
+									ng-model="servicio.auto.equipamiento.transmision"
+									value="Manual">Manual</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="optradio"
+									ng-model="servicio.auto.equipamiento.transmision"
+									value="Automatica">Autom&aacute;tica</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Elevadores</label>
+							<div class="radio">
+								<label><input type="radio" name="asdf"
+									ng-model="servicio.auto.equipamiento.elevadores"
+									value="Manuales">Manuales</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="asdf"
+									ng-model="servicio.auto.equipamiento.elevadores"
+									value="Electricos">El&eacute;ctricos</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Bolsas de Aire</label>
+							<div>
+								<input class="form-control" type="text"
+									ng-model="servicio.auto.equipamiento.bolsasDeAire" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="checkbox">
+								<label><input type="checkbox"
+									ng-model="servicio.auto.equipamiento.aireAcondicionado">Aire
+									Acondicionado</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix">
+					<h4>Equipamiento</h4>
+				</div>
+				<br>
+				<div class="row">
+					<div class="form-group">
+						<label for="comment">Descripci&oacute;n del Servicio:</label>
+						<textarea class="form-control" rows="4"
+							ng-model="servicio.servicio.descripcion"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					Caracter&iacute;sticas del Auto
+					<div class="form-group">
+						<div>
+							<input class="form-control" type="text"
+								ng-model="caracteristicaAuto" />
+						</div>
+						<button class="btn btn-small btn-primary" ng-click="addCaract()">Agregar</button>
+						<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!autoForm.$valid">Guardar</button>
+					</div>
+					<br>
+					<table class="table table-striped">
+						<tbody>
+							<tr
+								ng-repeat="carac in servicio.auto.equipamiento.equipoAdicional">
+								<td>{{carac}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</form>
+			
+
+		</div>
+	</div>
+	  <div class="modal fade" id="mdlCliente" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Seleccione el Cliente Deseado</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table-hover" style="border: 1px">
+  <tr>
+    <th width="25%">Nombre</th>
+    <th width="15%">RFC</th>
+    <th width="20%">Calle</th>
+    <th width="10%">Ciudad</th>
+    <th width="10%">C.P.</th>
+    <th width="10%">Colonia</th>
+    <th width="10%">No. Int.</th>
+    <th></th>
+  </tr>
+  <tr ng-repeat="c in clientes" height="20px">
+    <td>{{c.nombre}}</td>
+    <td>{{c.rfc}}</td>
+    <td>{{c.domicilio.calle}}</td>
+    <td>{{c.domicilio.ciudad}}</td>
+    <td>{{c.domicilio.codigoPostal}}</td>
+    <td>{{c.domicilio.colonia}}</td>
+    <td>{{c.domicilio.numInterior}}</td>
+    <td><button type="button" class="btn btn-success" ng-click="setClient(c)" data-dismiss="modal"><i class="fa fa-check"/></button></td>
+  </tr>
+
+</table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
+</div>
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+   
+      <div class="modal-body text-center">
+        <div class="loader"></div>
+          <div class="loader-txt" style=" color: white;">
+          <p>Por favor espere<br><br><small>{{msg}}</small></p>
+        </div>
+      </div>
+   
+  </div>
+</div>

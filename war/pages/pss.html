@@ -1,0 +1,16 @@
+<div class="col-md-6 col-md-offset-3">
+<form role="form" ng-submit="chg()">
+	<div class="form-group">
+		<label for="username">Contrase&ntilde;a:</label> <input type="password"
+			class="form-control" id="oldpass" name="oldpass" ng-model="credentials.oldpassword"  autocomplete="off" required/>
+	</div>
+	<div class="form-group">
+		<label for="password">Contrase&ntilde;a nueva:</label> <input type="password"
+			class="form-control" id="pass" name="pass" ng-model="credentials.passwordnew" required/>
+	</div>
+	<div class="form-group">
+		<label for="password">Confirmar Contrase&ntilde;a:</label> <input type="password"
+			class="form-control" id="pass" name="pass" ng-model="credentials.passwordconf" required/>
+	</div>
+	<button type="submit" class="btn btn-primary">Guardar</button>
+</form></div></div>
